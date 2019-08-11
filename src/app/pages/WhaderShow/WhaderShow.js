@@ -10,7 +10,7 @@ class WhaderShow extends Component {
         return (
             <div className={"dashboard"}>
                 <h2>
-                whader-App
+               
                 </h2>
 
 

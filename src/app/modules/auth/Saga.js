@@ -3,21 +3,17 @@ import * as Actions from "./Actions";
 import { actions } from "./Reducer";
 import AuthApi from "../../../api/AuthApi";
 
-export function* getUser({ payload }) {
-    console.log("gagoooo")
+export function* getCurrentWeather({ payload }) {
     try {
-        const response = yield call(AuthApi.getUser, payload);
-        // yield put(Actions.getUserSuccess(response.data));
-        console.log("gagoooo666699")
-
+        const response = yield call(AuthApi.getCurrentWeather, payload);
+        yield put(Actions.getCurrentWeatherSuccess(response));
     } catch (error) {
-        // yield put(Actions.getUserFail());
-        console.log("magoooo")
+        yield put(Actions.getCurrentWeatherFail());
     }
 }
 
 function* Saga() {
-    yield takeLatest(actions.GET_USER, getUser);
+    yield takeLatest(actions.GET_CURRENT_WEATHER, getCurrentWeather);
 }
 
 export default Saga;

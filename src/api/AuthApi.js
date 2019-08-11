@@ -1,18 +1,11 @@
 import axios from "axios";
-import { API_URL } from "../configs/constants";
+import { API_URL, API_KEY } from "../configs/constants";
 
 export default class AuthApi {
-    static getUser() {
-
-        console.log("hamballllllllllllllllll")
+    static getCurrentWeather(data) {
         return axios.request({
-            url: `${API_URL}/api/users/me`,
+            url: `${API_URL}?q=London,uk&APPID=${API_KEY}`,
             method: "GET",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
-            withToken: true,
         });
     }
 }

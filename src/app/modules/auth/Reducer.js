@@ -1,23 +1,33 @@
 export const actions = {
-    GET_USER: "GET_USER",
-    GET_USER_SUCCESS: "GET_USER_SUCCESS",
-    GET_USER_FAIL: "GET_USER_FAIL",
+
+    THIS_WEEK: "THIS_WEEK",
+
+    GET_CURRENT_WEATHER: "GET_CURRENT_WEATHER",
+    GET_CURRENT_WEATHER_SUCCESS: "GET_CURRENT_WEATHER_SUCCESS",
+    GET_CURRENT_WEATHER_FAIL: "GET_CURRENT_WEATHER_FAIL",
 
 
     CLEAR_USERS_STORE: "CLEAR_USERS_STORE"
 };
 
 const defaultState = {
-    thisWeek: null
-  };
+    thisWeek: [],
+    showData: [],
+};
 
-export default (state = defaultState, {type, payload}) => {
+export default (state = defaultState, { type, payload }) => {
     switch (type) {
-             case actions.GET_USER_SUCCESS:
+
+        case actions.THIS_WEEK:
             return {
                 ...state,
-                authFetching: false,
-                user: payload,
+                thisWeek: payload,
+            };
+
+        case actions.GET_CURRENT_WEATHER_SUCCESS:
+            return {
+                ...state,
+                showData: payload.data,
             };
         default:
             return state;
