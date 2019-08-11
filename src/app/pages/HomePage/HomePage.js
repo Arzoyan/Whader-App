@@ -1,48 +1,84 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import selector from "../../services/selector";
-import { getCurrentWeather, thisWeek } from "../../modules/auth/Actions";
-import moment from "moment";
-import DropdownCreator from "../../../components/DropdownCreator";
+import {
+    getCurrentWeatherData, thisWeek,
+    getWeekWeatherData, thisDayWeather,
+    clearState
+} from "../../modules/auth/Actions";
+import DropdownCreator from "../WeekDropdown/DropdownCreator";
+import { CITIES, CURRENT_WEEK } from "../../../configs/constants";
+import WeatherShow from "../WeatherShow/WhaderShow";
+import "./index.css"
 
 
 class HomePage extends Component {
 
+    state = {
+        city: "yerevan",
+        currentDay: null,
+        weekWeather: null,
+    }
+
     componentDidMount() {
-        let defaultWeek = []
-        for (let i = 0; i < 7; i++) {
-            if ((new Date().getDate() + i) > 30) {
-                defaultWeek.push((new Date().getDate() + i - 30))
-            } else {
-                defaultWeek.push(new Date().getDate() + i)
-            }
+        let currentWeek = CURRENT_WEEK();
+
+        this.props.dispatch(thisWeek(currentWeek))
+        this.props.dispatch(getCurrentWeatherData("Yerevan"))
+        this.props.dispatch(getWeekWeatherData("Yerevan"))
+    }
+
+    handleChange = (e) => {
+        const { city } = this.state;
+        this.props.dispatch(clearState());
+        this.setState({
+            [e.target.id]: e.target.value,
+            currentDay: null,
+            weekWeather: null,
+        }, () => {
+            this.props.dispatch(getCurrentWeatherData(city));
+            this.props.dispatch(getWeekWeatherData(city));
+        })
+    }
+
+    handleCurrentValue = (day) => {
+        const { showData } = this.props;
+        if (showData.length > 0 && day !== this.state.currentDay) {
+            this.setState({
+                currentDay: day
+            }, () => {
+                let weekWeather = showData.filter(wheader => wheader.dt_txt.slice(0, 10) === day);
+                return !!weekWeather && this.props.dispatch(thisDayWeather(weekWeather))
+            })
         }
-
-        this.props.dispatch(thisWeek(defaultWeek))
-        this.props.dispatch(getCurrentWeather())
     }
-    gago(e) {
-        console.log("eeeeeeeeeee", e)
-    }
-
 
     render() {
-        console.log(this.props, "gagik ")
+        const { thisDayWeather, currentWeather, thisWeek } = this.props;
+        const { city, currentDay } = this.state;
         return (
             <div className={"dashboard"}>
                 <div>
-                    <h1 onClick={(e) => { this.gago(moment().format("dd, MM DD")) }} >  {moment().format("ddddd, MM DD")}
+                    <h1>
+                        {currentWeather && <WeatherShow weekData={currentWeather} type={"city"} city={city} />}
                     </h1>
                 </div>
-
                 <div>
                     {
-                        this.props.thisWeek.length > 0 ? this.props.thisWeek.map(e => {
-                            return <DropdownCreator key={e} day={e} />
+                        !!thisWeek && thisWeek.length > 0 ? this.props.thisWeek.map(e => {
+                            return <DropdownCreator key={e} day={e} loadCustomData={this.handleCurrentValue}
+                                className={e === currentDay ? "activ" : ""} />
                         }) : null
                     }
+                    <select className="cities" id="city" onChange={(e) => { this.handleChange(e) }} >
+                        {CITIES.map(city => {
+                            return <option className="city" key={city} value={city}>{city}</option>
+                        })}
+                    </select>
                 </div>
-
+                <div>
+                    {thisDayWeather && <WeatherShow weekData={thisDayWeather} type={"week"} />}
+                </div>
             </div>
         );
     }

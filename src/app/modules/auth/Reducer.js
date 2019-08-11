@@ -1,18 +1,24 @@
 export const actions = {
+    GET_CURRENT_EATHER_DATA: "GET_CURRENT_EATHER_DATA",
+    CURRENT_EATHER_DATA_SUCCESS: "CURRENT_EATHER_DATA_SUCCESS",
+    CURRENT_EATHER_DATA_FAIL: "CURRENT_EATHER_DATA_FAIL",
 
     THIS_WEEK: "THIS_WEEK",
+    THIS_DAY_WEATHER: "THIS_DAY_WEATHER",
 
-    GET_CURRENT_WEATHER: "GET_CURRENT_WEATHER",
-    GET_CURRENT_WEATHER_SUCCESS: "GET_CURRENT_WEATHER_SUCCESS",
-    GET_CURRENT_WEATHER_FAIL: "GET_CURRENT_WEATHER_FAIL",
+    GET_WEEK_EATHER_DATA: "GET_WEEK_EATHER_DATA",
+    WEEK_EATHER_DATA_SUCCESS: "WEEK_EATHER_DATA_SUCCESS",
+    WEEK_EATHER_DATA_FAIL: "WEEK_EATHER_DATA_FAIL",
 
-
-    CLEAR_USERS_STORE: "CLEAR_USERS_STORE"
+    CLEAR_AUTH_STORE: "CLEAR_AUTH_STORE"
 };
 
 const defaultState = {
+    currentWeather: null,
     thisWeek: [],
-    showData: [],
+    showData: null,
+    cityWeather: null,
+    thisDayWeather: null,
 };
 
 export default (state = defaultState, { type, payload }) => {
@@ -23,11 +29,32 @@ export default (state = defaultState, { type, payload }) => {
                 ...state,
                 thisWeek: payload,
             };
-
-        case actions.GET_CURRENT_WEATHER_SUCCESS:
+        case actions.THIS_DAY_WEATHER:
             return {
                 ...state,
-                showData: payload.data,
+                thisDayWeather: payload,
+            };
+
+        case actions.CURRENT_EATHER_DATA_SUCCESS:
+            let data = { ...payload.data.main, ...payload.data.weather[0] }
+            return {
+                ...state,
+                currentWeather: data,
+            };
+
+        case actions.WEEK_EATHER_DATA_SUCCESS:
+            return {
+                ...state,
+                showData: payload.data.list,
+            };
+
+        case actions.CLEAR_AUTH_STORE:
+            return {
+                ...state,
+                currentWeather: null,
+                showData: null,
+                cityWeather: null,
+                thisDayWeather: null,
             };
         default:
             return state;

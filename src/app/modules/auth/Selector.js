@@ -10,9 +10,19 @@ export const showDataSelector = createSelector(
     authStoreSelector, (Auth) => Auth.showData
 );
 
+export const cityWeatherSelector = createSelector(
+    authStoreSelector, (Auth) => Auth.currentWeather
+);
+
+export const thisDayWeatherSelector = createSelector(
+    authStoreSelector, (Auth) => Auth.thisDayWeather
+);
+
 export default state => {
     return {
         thisWeek: thisWeekSelector(state),
         showData: showDataSelector(state),
+        currentWeather: cityWeatherSelector(state),
+        thisDayWeather: thisDayWeatherSelector(state),
     };
 };

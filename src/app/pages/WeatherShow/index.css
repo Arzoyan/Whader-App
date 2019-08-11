@@ -1,0 +1,33 @@
+table {
+  margin: 30px 0;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 60%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+  .current-weather{
+    border-radius: 8px;
+    border: 1px solid #feb020;
+    width: 15%; 
+  }
+
+  .weather-header{
+    height: 50px;
+    background-color: #feb020;
+    width: 100%;
+    display: flex;
+  }
+
+  .weather-body{
+    margin: 25px 5px;
+  }
