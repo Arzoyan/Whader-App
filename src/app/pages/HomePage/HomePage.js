@@ -47,7 +47,7 @@ class HomePage extends Component {
     // check selected day
     handleCurrentValue = (day) => {
         const { showData } = this.props;
-        if (showData.length > 0 && day !== this.state.currentDay) {
+        if (showData && showData.length > 0 && day !== this.state.currentDay) {
             this.setState({
                 currentDay: day
             }, () => {
