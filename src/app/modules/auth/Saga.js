@@ -21,9 +21,21 @@ export function* getWeekWeatherData({ payload }) {
     }
 }
 
+export function* getWeatherCurrentLocation() {
+    try {
+        const response = yield call(AuthApi.getIPAddress);
+        const responseCurrentLocation = yield call(AuthApi.getWeatherWithLocation, response.data.ip);
+        const responseCurrentCity = yield call(AuthApi.getCurrentWeatherData, responseCurrentLocation.data.city);
+        yield put(Actions.CurrentWeatherDataSucceed(responseCurrentCity));
+    } catch (error) {
+        yield put(Actions.CurrentWeatherDataFail());
+    }
+}
+
 function* Saga() {
     yield takeLatest(actions.GET_CURRENT_EATHER_DATA, getCurrentWeatherData);
     yield takeLatest(actions.GET_WEEK_EATHER_DATA, getWeekWeatherData);
+    yield takeLatest(actions.GET_EATHER_DATA_WITH_LOCATION, getWeatherCurrentLocation);
 }
 
 export default Saga;

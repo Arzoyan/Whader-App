@@ -4,7 +4,7 @@ import selector from "../../services/selector";
 import {
     getCurrentWeatherData, thisWeek,
     getWeekWeatherData, thisDayWeather,
-    clearState
+    clearState,getCurrentLocationWeather
 } from "../../modules/auth/Actions";
 import DropdownCreator from "../WeekDropdown/DropdownCreator";
 import { CITIES, CURRENT_WEEK } from "../../../configs/constants";
@@ -22,8 +22,9 @@ class HomePage extends Component {
 
     componentDidMount() {
         let currentWeek = CURRENT_WEEK();
-
+     
         this.props.dispatch(thisWeek(currentWeek))
+        this.props.dispatch(getCurrentLocationWeather())
         this.props.dispatch(getCurrentWeatherData("Yerevan"))
         this.props.dispatch(getWeekWeatherData("Yerevan"))
     }
@@ -59,11 +60,11 @@ class HomePage extends Component {
         return (
             <div className={"dashboard"}>
                 <div>
-                    <h1>
-                        {currentWeather && <WeatherShow weekData={currentWeather} type={"city"} city={city} />}
-                    </h1>
+
+                    {currentWeather && <WeatherShow weekData={currentWeather} type={"city"} city={city} />}
+
                 </div>
-                <div>
+                <div className="days-wrapper">
                     {
                         !!thisWeek && thisWeek.length > 0 ? this.props.thisWeek.map(e => {
                             return <DropdownCreator key={e} day={e} loadCustomData={this.handleCurrentValue}

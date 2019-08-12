@@ -14,25 +14,20 @@ const WeatherShow = (props) => {
                                 return <tr key={index}>
                                     <th>{data.dt_txt} </th>
                                     <th>{data.main.temp} K</th>
-                                    <th> wheader  is {data.weather[0].main}</th>
+                                    <th> {data.weather[0].description}</th>
                                 </tr>
-
                             })
                         }
                         </tbody>
-
                     </table>}
                 </> : <h1> Sorry there are no information yet</h1>
         case "city":
             return <>
                 <div className={"current-weather"}>
                     <label className="weather-header">
-                        {city}
+                        {city}:
                     </label>
                     <p className="weather-body">  {weekData.temp} K  </p>
-                    <label className={"weather-header"} >
-                        {weekData.main}
-                    </label>
                 </div>
             </>
         default: return null

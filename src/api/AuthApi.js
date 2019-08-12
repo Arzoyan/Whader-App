@@ -16,5 +16,19 @@ export default class AuthApi {
         });
     }
 
+    static getWeatherWithLocation(data) {
+        return axios.request({
+            url: `http://api.ipstack.com/${data}?access_key=bcdf7ae470e9e1c52ab960c567832cbd`,
+            method: "GET",
+        });
+    }
+
+    static getIPAddress() {
+        return axios.request({
+            url: `http://jsonip.com`,
+            method: "GET",
+        });
+    }
+
 
 }

@@ -32,6 +32,10 @@ export function weekWeatherFail() {
     return { type: actions.WEEK_EATHER_DATA_FAIL };
 }
 
+export function getCurrentLocationWeather() {
+    return { type: actions.GET_EATHER_DATA_WITH_LOCATION };
+}
+
 export function clearState() {
     return { type: actions.CLEAR_AUTH_STORE };
 }
