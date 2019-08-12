@@ -25,7 +25,7 @@ export default class AuthApi {
 
     static getIPAddress() {
         return axios.request({
-            url: `http://jsonip.com`,
+            url: `http://www.geoplugin.net/json.gp`,
             method: "GET",
         });
     }

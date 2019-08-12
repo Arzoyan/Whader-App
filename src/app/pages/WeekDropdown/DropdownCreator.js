@@ -6,7 +6,7 @@ const DropdownCreator = (props) => {
     const { day, loadCustomData, className } = props;
 
     return <>
-        <div className={`week ${className}`} onClick={() => loadCustomData(day)} > {day} <img className="calendar" src={calendar}/> </div>
+        <div className={`week ${className}`} onClick={() => loadCustomData(day)} > {day} <img alt="calendar" className="calendar" src={calendar} /> </div>
     </>
 }
 

@@ -25,8 +25,8 @@ class HomePage extends Component {
      
         this.props.dispatch(thisWeek(currentWeek))
         this.props.dispatch(getCurrentLocationWeather())
-        this.props.dispatch(getCurrentWeatherData("Yerevan"))
-        this.props.dispatch(getWeekWeatherData("Yerevan"))
+        // this.props.dispatch(getCurrentWeatherData("Yerevan"))
+        // this.props.dispatch(getWeekWeatherData("Yerevan"))
     }
 
 

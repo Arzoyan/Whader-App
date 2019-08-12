@@ -24,9 +24,12 @@ export function* getWeekWeatherData({ payload }) {
 export function* getWeatherCurrentLocation() {
     try {
         const response = yield call(AuthApi.getIPAddress);
-        const responseCurrentLocation = yield call(AuthApi.getWeatherWithLocation, response.data.ip);
+                const responseCurrentLocation = yield call(AuthApi.getWeatherWithLocation, response.data.geoplugin_request);
+       
         const responseCurrentCity = yield call(AuthApi.getCurrentWeatherData, responseCurrentLocation.data.city);
         yield put(Actions.CurrentWeatherDataSucceed(responseCurrentCity));
+        const responseWeekData = yield call(AuthApi.getWeekWeatherData, responseCurrentLocation.data.city);
+        yield put(Actions.weekWeatherSuccess(responseWeekData));
     } catch (error) {
         yield put(Actions.CurrentWeatherDataFail());
     }
