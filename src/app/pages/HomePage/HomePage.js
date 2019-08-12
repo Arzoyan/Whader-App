@@ -29,6 +29,8 @@ class HomePage extends Component {
         this.props.dispatch(getWeekWeatherData("Yerevan"))
     }
 
+
+    // change state and get new weather
     handleChange = (e) => {
         const { city } = this.state;
         this.props.dispatch(clearState());
@@ -42,6 +44,7 @@ class HomePage extends Component {
         })
     }
 
+    // check selected day
     handleCurrentValue = (day) => {
         const { showData } = this.props;
         if (showData.length > 0 && day !== this.state.currentDay) {
